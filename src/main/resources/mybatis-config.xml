@@ -17,9 +17,8 @@
 <configuration>
     <typeAliases>
         <package name="com.board.boardstudy.model"/>
-
     </typeAliases>
     <mappers>
-        <mapper resource="mybatis/BoardMapper.xml"/>
+        <mapper resource="mybatis/boardMapper.xml"/>
     </mappers>
 </configuration>
