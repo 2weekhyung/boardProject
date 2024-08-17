@@ -49,4 +49,34 @@ public class boardController {
         mav.addObject("boardList6", arr6);
         return mav;
     }
+
+
+    @RequestMapping(value = "/login")
+    public ModelAndView login() {
+        ModelAndView mav = new ModelAndView("login");
+
+
+        return mav;
+    }
+    @RequestMapping(value = "/insert")
+    public ModelAndView insert() {
+        ModelAndView mav = new ModelAndView("insert");
+
+
+        return mav;
+    }
+    @RequestMapping(value = "/detail")
+    public ModelAndView detail() {
+        ModelAndView mav = new ModelAndView("detail");
+
+
+        return mav;
+    }
+    @RequestMapping(value = "/join")
+    public ModelAndView join() {
+        ModelAndView mav = new ModelAndView("join");
+
+
+        return mav;
+    }
 }

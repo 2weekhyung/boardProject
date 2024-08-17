@@ -1,46 +1,182 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>게시판 리스트</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #0056b3;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-bar h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #0056b3;
+        }
+
+        .top-bar .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-bar .actions button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-bar .actions button:hover {
+            background-color: #003f88;
+        }
+
+        .top-bar .actions select {
+            padding: 10px;
+            border-radius: 25px;
+            border: 2px solid #0056b3;
+            background-color: white;
+            color: #0056b3;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        table thead {
+            background-color: #f4f7fc;
+        }
+
+        table thead th {
+            padding: 15px;
+            text-align: left;
+            font-size: 1em;
+            color: #0056b3;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tbody tr:hover {
+            background-color: #f4f7fc;
+        }
+
+        table tbody td {
+            padding: 15px;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0056b3;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
 <header>
     <h1>게시판</h1>
 </header>
 <main>
-    <section>
+    <div class="top-bar">
         <h2>게시글 목록</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- 반복문을 사용하여 boardList의 각 항목을 출력합니다. -->
-            <tr th:each="board : ${boardList}">
-
-                <td th:text="${board.id}"></td>
-                <td th:text="${board.title}"></td>
-                <td th:text="${board.writer}"></td>
-                <td th:text="${board.created_at}"></td>
-                <td th:text="${board.view_count}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-    <section>
-        <!-- Pagination logic can be added here if needed -->
-    </section>
+        <div class="actions">
+            <select id="sortOptions" onchange="sortPosts()">
+                <option value="recent">최신순</option>
+                <option value="views">조회수순</option>
+            </select>
+            <button onclick="location.href='/write'">작성하기</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody id="boardList">
+        <!-- 반복문을 사용하여 boardList의 각 항목을 출력합니다. -->
+        <tr th:each="board : ${boardList}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.writer}"></td>
+            <td th:text="${board.created_at}"></td>
+            <td th:text="${board.view_count}"></td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 <footer>
     <p>© 2024 게시판</p>
 </footer>
+<script>
+    function sortPosts() {
+        const sortOption = document.getElementById('sortOptions').value;
+        let boardList = document.getElementById('boardList');
+
+        // 여기서 서버 측으로 요청을 보내거나, 클라이언트 측에서 정렬 작업을 수행합니다.
+        // 예를 들어, AJAX 요청을 통해 정렬된 데이터를 다시 불러올 수 있습니다.
+        // 지금은 일단 서버 측에서 정렬된 데이터를 받아온다고 가정하겠습니다.
+
+        // 이 부분은 서버와의 통신이나 데이터 갱신에 필요한 JavaScript 코드로 작성해야 합니다.
+        // 예시:
+        // fetch(`/api/posts?sort=${sortOption}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 데이터 렌더링 로직
+        //     });
+    }
+</script>
 </body>
 </html>
